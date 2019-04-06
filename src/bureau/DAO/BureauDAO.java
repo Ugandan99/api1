@@ -6,7 +6,7 @@
 package bureau.DAO;
 
 /**
- * classe de mappage poo-relationnel client
+ * classe de mappage poo-relationnel bureau
  *
  * @author Valentin De Cooman
  * @version 1.0
@@ -17,9 +17,8 @@ import java.time.LocalDate;
 import java.util.*;
 import messages.metier.Bureau;
 
-
 public class BureauDAO extends DAO<Bureau> {
-    
+
     /**
      * création d'un bureau sur base des valeurs de son objet métier
      *
@@ -28,7 +27,7 @@ public class BureauDAO extends DAO<Bureau> {
      * @return bureau créé
      */
     @Override
-    public Bureau create(Bureau obj)throws SQLException {
+    public Bureau create(Bureau obj) throws SQLException {
         String req1 = "insert into api_bureau(sigle,tel,description) values(?,?,?)";
         String req2 = "select idbur from api_bureau where sigle=? and tel=? and description=?";
         try (PreparedStatement pstm1 = dbConnect.prepareStatement(req1);
@@ -53,9 +52,8 @@ public class BureauDAO extends DAO<Bureau> {
                 }
             }
         }
-        
     }
-    
+
     /**
      * récupération des informations sur un bureau avec son id
      *
@@ -64,9 +62,8 @@ public class BureauDAO extends DAO<Bureau> {
      * @return bureau trouvé
      */
     @Override
-    public Bureau read(int idbur)throws SQLException {
+    public Bureau read(int idbur) throws SQLException {
         String req = "select * from api_bureau where idbur = ?";
-
         try (PreparedStatement pstm = dbConnect.prepareStatement(req)) {
 
             pstm.setInt(1, idbur);
@@ -84,18 +81,18 @@ public class BureauDAO extends DAO<Bureau> {
             }
         }
     }
-    
-     /**
+
+    /**
      * modification des informations d'un bureau
      *
      * @throws SQLException erreur de mise à jour
      * @param obj bureau à modifier
-     * @return bureau modifier
+     * @return bureau modifié
      */
     @Override
-    public Bureau update(Bureau obj)throws SQLException {
-        
-                String req = "update api_bureau set sigle= ?, tel = ? , description = ? where idbur= ?";
+    public Bureau update(Bureau obj) throws SQLException {
+
+        String req = "update api_bureau set sigle= ?, tel = ? , description = ? where idbur= ?";
         try (PreparedStatement pstm = dbConnect.prepareStatement(req)) {
 
             pstm.setInt(4, obj.getIdbur());
@@ -109,42 +106,71 @@ public class BureauDAO extends DAO<Bureau> {
             return read(obj.getIdbur());
         }
     }
-    
-     /**
-     * suppression d'un bureau 
+
+    /**
+     * suppression d'un bureau
      *
      * @throws SQLException erreur de suppression
      * @param obj bureau a supprimer
      */
     @Override
-    public void delete(Bureau obj)throws SQLException {
+    public void delete(Bureau obj) throws SQLException {
         String req = "delete from api_bureau where idbur= ?";
         try (PreparedStatement pstm = dbConnect.prepareStatement(req)) {
 
             pstm.setInt(1, obj.getIdbur());
             int n = pstm.executeUpdate();
-            //System.out.println(n);
             if (n == 0) {
                 throw new SQLException("Aucun bureau n'a été effacé");
             }
 
         }
-        
+
     }
-    
+
+    @Override
+    public Bureau read(String matr) throws SQLException {
+        return null;
+    }
+
+    /**
+     * recherche de l'id d'un bureau en fonction de son sigle
+     *
+     * @throws SQLException aucun bureau ne correspond
+     * @param sigle sigle du bureau
+     * @return l'id du bureau concerné
+     */
+    public Bureau rechsigle(String sigle) throws SQLException {
+        String req = "select idbur from api_bureau where sigle like ? ";
+        try (PreparedStatement pstm = dbConnect.prepareStatement(req)) {
+            int idbur;
+            pstm.setString(1, sigle);
+            try (ResultSet rs = pstm.executeQuery()) {
+                if (rs.next()) {
+                    idbur = rs.getInt("IDBUR");
+                    Bureau Bur1 = new Bureau(idbur, null, null, null);
+                    return Bur1;
+                } else {
+                    throw new SQLException("Aucun bureau");
+                }
+
+            }
+        }
+    }
+
     /**
      * recherche d'un bureau sur base de sa description
      *
      * @throws SQLException aucun bureau trouvé
      * @param rech partie de la description
-     * @return bureau trouvé
+     * @return liste bureau trouvés
      */
-    public List <Bureau> search(String rech)throws SQLException {
+    public List<Bureau> search(String rech) throws SQLException {
         List<Bureau> plusieurs = new ArrayList<>();
         String req = "select * from api_bureau where description like ? ";
 
         try (PreparedStatement pstm = dbConnect.prepareStatement(req)) {
-            pstm.setString(1, "%"+rech+"%");
+            pstm.setString(1, "%" + rech + "%");
             try (ResultSet rs = pstm.executeQuery()) {
                 boolean trouve = false;
                 while (rs.next()) {
@@ -153,7 +179,7 @@ public class BureauDAO extends DAO<Bureau> {
                     String sigle = rs.getString("SIGLE");
                     String tel = rs.getString("TEL");
                     String description = rs.getString("DESCRIPTION");
-                    
+
                     plusieurs.add(new Bureau(idbur, sigle, tel, description));
                 }
 
@@ -165,9 +191,5 @@ public class BureauDAO extends DAO<Bureau> {
             }
         }
     }
-    
-    
-    
-    
-    
+
 }
