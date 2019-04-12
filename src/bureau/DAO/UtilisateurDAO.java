@@ -134,6 +134,9 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
             }
 
         }
+        catch (SQLException e) {
+            System.out.println("Erreur " + e.getMessage());
+        }
     }
 
     /**

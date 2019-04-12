@@ -133,4 +133,29 @@ public class Bureau {
     public String toString() {
         return "Bureau{" + "idbur=" + idbur + ", sigle=" + sigle + ", tel=" + tel + ", description=" + description + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Bureau other = (Bureau) obj;
+        if (this.idbur != other.idbur) {
+            return false;
+        }
+        return true;
+    }
+    
 }

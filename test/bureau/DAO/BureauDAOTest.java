@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.util.List;
 import messages.metier.Bureau;
 import myconnections.DBConnection;
+import messages.metier.Utilisateur;
+import bureau.DAO.UtilisateurDAO;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -65,7 +67,18 @@ public class BureauDAOTest {
         assertEquals("Tel différent", expResult.getTel(), result.getTel());
         assertEquals("Description différente", expResult.getDescription(), result.getDescription());
         assertNotEquals("Id non généré", expResult.getIdbur(), result.getIdbur());
+        
+        Bureau obj2 = new Bureau(0, "TestSigle", "TestTel2", "TestDesc2");
+        try {
+            Bureau result2 = instance.create(obj2);
+            fail("exception de doublon non déclenchée");
+            instance.delete(result2);
+        } catch (SQLException e) {
+        }
+        
         instance.delete(result);
+        
+        
     }
 
     /**
@@ -131,8 +144,7 @@ public class BureauDAOTest {
             fail("Exception de record introuvable non générée");
         } catch (SQLException e) {
         }
-        //TODO vérifier qu'on a bien une exception en cas de record parent de clé étrangère
-
+        
     }
 
     /**
@@ -169,7 +181,6 @@ public class BureauDAOTest {
      */
     @Test
     public void testSearch() throws Exception {
-        //Ne comprends pas le problème
         System.out.println("search");
         Bureau obj = new Bureau(0, "TestSigle", "TestTel", "TestDesc2");
         Bureau obj2 = new Bureau(0, "TestSigle2", "TestTel2", "TestDesc2");
@@ -182,9 +193,9 @@ public class BureauDAOTest {
         instance.delete(obj);
         instance.delete(obj2);
 
-        for (Bureau bl : result) {
+        /*for (Bureau bl : result) {
             System.out.println(bl);
-        }
+        }*/
         if (result.indexOf(obj2) < 0) {
             fail("Record introuvable " + obj2);
         }
