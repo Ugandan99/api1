@@ -188,8 +188,9 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
                     trouve = true;
                     String nom = rs.getString("NOM");
                     String prenom = rs.getString("PRENOM");
-
-                    plusieurs.add(new Utilisateur(nom, prenom));
+                    String matricule = rs.getString("MATRICULE");
+                    int idemp = rs.getInt("IDEMP");
+                    plusieurs.add(new Utilisateur(idemp,nom, prenom,matricule));
                 }
 
                 if (!trouve) {

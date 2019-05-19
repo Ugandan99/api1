@@ -63,13 +63,17 @@ public class Utilisateur {
     /**
      * constructeur paramétré
      *
+     * @param idemp id de l'employé
      * @param nom nom employé
      * @param prenom prénom employé
+     * @param matricule matricule de l'employé
      *
      */
-    public Utilisateur(String nom, String prenom) {
+    public Utilisateur(int idemp,String nom, String prenom, String matricule) {
+        this.idemp = idemp;
         this.nom = nom;
         this.prenom = prenom;
+        this.matricule = matricule;
     }
 
     /**
