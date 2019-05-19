@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import myconnections.DBConnection;
 import bureau.DAO.BureauDAO;
 import bureau.DAO.UtilisateurDAO;
+import bureau.DAO.MessageDAO;
 /**
  *
  * @author Valentin
@@ -35,10 +36,16 @@ public class Gestion extends javax.swing.JFrame {
         bureauDAO.setConnection(dbConnect);
         UtilisateurDAO utilDAO = new UtilisateurDAO();
         utilDAO.setConnection(dbConnect);
+        MessageDAO messDAO = new MessageDAO();
+        messDAO.setConnection(dbConnect);
         creabur1.setBureauDAO(bureauDAO);
         rechdescbur1.setBureauDAO(bureauDAO);
         rechidbur1.setBureauDAO(bureauDAO);
         rechidbur1.setUtilisateurDAO(utilDAO);
+        affenv2.setMessageDAO(messDAO);
+        affrec2.setMessageDAO(messDAO);
+        
+        
         /*rechCliNum.setClientDAO(clientDAO);
         rechNom.setClientDAO(clientDAO);*/
     }
@@ -58,6 +65,8 @@ public class Gestion extends javax.swing.JFrame {
         suppbur1 = new bureau.graph.suppbur();
         creabur1 = new bureau.graph.creabur();
         rechidbur1 = new bureau.graph.rechidbur();
+        affenv2 = new bureau.graph.affenv();
+        affrec2 = new bureau.graph.affrec();
         jMenuBar1 = new javax.swing.JMenuBar();
         Bur = new javax.swing.JMenu();
         creerbur = new javax.swing.JMenuItem();
@@ -84,7 +93,7 @@ public class Gestion extends javax.swing.JFrame {
         modifbur1.setLayout(modifbur1Layout);
         modifbur1Layout.setHorizontalGroup(
             modifbur1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 620, Short.MAX_VALUE)
+            .addGap(0, 749, Short.MAX_VALUE)
         );
         modifbur1Layout.setVerticalGroup(
             modifbur1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,7 +106,7 @@ public class Gestion extends javax.swing.JFrame {
         rechdescbur1.setLayout(rechdescbur1Layout);
         rechdescbur1Layout.setHorizontalGroup(
             rechdescbur1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 620, Short.MAX_VALUE)
+            .addGap(0, 749, Short.MAX_VALUE)
         );
         rechdescbur1Layout.setVerticalGroup(
             rechdescbur1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,7 +119,7 @@ public class Gestion extends javax.swing.JFrame {
         suppbur1.setLayout(suppbur1Layout);
         suppbur1Layout.setHorizontalGroup(
             suppbur1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 620, Short.MAX_VALUE)
+            .addGap(0, 749, Short.MAX_VALUE)
         );
         suppbur1Layout.setVerticalGroup(
             suppbur1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,6 +129,8 @@ public class Gestion extends javax.swing.JFrame {
         getContentPane().add(suppbur1, "card7");
         getContentPane().add(creabur1, "card3");
         getContentPane().add(rechidbur1, "card8");
+        getContentPane().add(affenv2, "card9");
+        getContentPane().add(affrec2, "card10");
 
         Bur.setText("Bureau");
         Bur.addActionListener(new java.awt.event.ActionListener() {
@@ -274,14 +285,17 @@ public class Gestion extends javax.swing.JFrame {
 
     private void affempActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_affempActionPerformed
         // TODO add your handling code here:
+        cardl.show(this.getContentPane(), "card8");
     }//GEN-LAST:event_affempActionPerformed
 
     private void affenvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_affenvActionPerformed
         // TODO add your handling code here:
+        cardl.show(this.getContentPane(), "card9");
     }//GEN-LAST:event_affenvActionPerformed
 
     private void affrecuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_affrecuActionPerformed
         // TODO add your handling code here:
+        cardl.show(this.getContentPane(), "card10");
     }//GEN-LAST:event_affrecuActionPerformed
 
     private void rechempActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechempActionPerformed
@@ -341,6 +355,8 @@ public class Gestion extends javax.swing.JFrame {
     private bureau.graph.Accueil accueil1;
     private javax.swing.JMenuItem affemp;
     private javax.swing.JMenuItem affenv;
+    private bureau.graph.affenv affenv2;
+    private bureau.graph.affrec affrec2;
     private javax.swing.JMenuItem affrecu;
     private bureau.graph.creabur creabur1;
     private javax.swing.JMenuItem creerbur;

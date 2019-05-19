@@ -24,7 +24,7 @@ public class Message {
     /**
      * date d'envoi du message
      */
-    protected LocalDate dateenvoi;
+    protected String dateenvoi;
     /**
      * id émetteur du message
      */
@@ -33,6 +33,14 @@ public class Message {
      * id du destinataire d'un message
      */
     protected int iddest;
+     /**
+     * matricule de l'emetteur
+     */
+    protected String emett;
+    /**
+     * matricule du destinataire
+     */
+    protected String dest;
     /**
      * constructeur par défaut
      */
@@ -47,11 +55,23 @@ public class Message {
      * @param contenu contenu du message envoyé
      * @param dateenvoi date d'envoi du message, généré par la base de données
      * @param idemett id de l'expéditeur
+     * @param dest matricule du destinataire
      */
-    public Message(int idmsg, String contenu, LocalDate dateenvoi, int idemett) {
+    public Message(int idmsg, String contenu, String dateenvoi, int idemett,String dest) {
         this.idemett = idemett;
         this.contenu = contenu;
         this.dateenvoi = dateenvoi;
+        this.dest=dest;
+        
+    }
+    
+    public Message(String contenu,String dateenvoi,String dest,String emett)
+    {
+        this.contenu=contenu;
+        this.dateenvoi=dateenvoi;
+        this.dest=dest;
+        this.emett=emett;
+        
     }
 
     /**
@@ -99,7 +119,7 @@ public class Message {
      *
      * @param dateenvoi date d'envoi du message
      */
-    public void setDateenvoi(LocalDate dateenvoi) {
+    public void setDateenvoi(String dateenvoi) {
         this.dateenvoi = dateenvoi;
     }
 
@@ -145,7 +165,7 @@ public class Message {
      *
      * @return date d'envoi du message
      */
-    public LocalDate getDateenvoi() {
+    public String getDateenvoi() {
         return dateenvoi;
     }
 
@@ -173,5 +193,22 @@ public class Message {
     public void setIddest(int iddest) {
         this.iddest = iddest;
     }
+
+    public String getEmett() {
+        return emett;
+    }
+
+    public String getDest() {
+        return dest;
+    }
+
+    public void setEmett(String emett) {
+        this.emett = emett;
+    }
+
+    public void setDest(String dest) {
+        this.dest = dest;
+    }
+    
     
 }

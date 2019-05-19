@@ -71,7 +71,7 @@ public class MessageDAO extends DAO<Message> {
      */
     public List<Message> search(int idemp) throws SQLException {
         List<Message> plusieurs = new ArrayList<>();
-        String req = "select * from api_message where idemett = ? ";
+        String req = "select * from vue1 where idemett = ? ";
         try (PreparedStatement pstm = dbConnect.prepareStatement(req)) {
             pstm.setInt(1, idemp);
             try (ResultSet rs = pstm.executeQuery()) {
@@ -80,10 +80,10 @@ public class MessageDAO extends DAO<Message> {
                     trouve = true;
                     int idmsg = rs.getInt("IDMSG");
                     String contenu = rs.getString("CONTENU");
-                    //LocalDate dateenvoi = rs.getDate(1).toLocalDate();
-                    LocalDate dateenvoi = null;
+                    String dateenvoi = rs.getString("DATEENVOI");
                     int idemett = rs.getInt("IDEMETT");
-                    plusieurs.add(new Message(idmsg, contenu, dateenvoi, idemett));
+                    String dest = rs.getString("DEST");
+                    plusieurs.add(new Message(idmsg, contenu, dateenvoi, idemett,dest));
                 }
 
                 if (!trouve) {
@@ -113,8 +113,10 @@ public class MessageDAO extends DAO<Message> {
                 while (rs.next()) {
                     trouve = true;
                     String contenu = rs.getString("CONTENU");
-
-                    plusieurs.add(new Message(contenu));
+                    String date = rs.getString("DATEENVOI");
+                    String dest = rs.getString("DEST");
+                    String emett = rs.getString("EMETT");
+                    plusieurs.add(new Message(contenu,date,dest,emett));
                 }
 
                 if (!trouve) {

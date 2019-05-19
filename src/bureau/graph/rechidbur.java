@@ -234,32 +234,38 @@ public class rechidbur extends javax.swing.JPanel {
 
     private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
         // TODO add your handling code here:
-        int id = Integer.parseInt(txtid.getText());
-        try {
-            b1 = burDAO.read(id);
-            txtsigle.setText("" + b1.getSigle());
-            txttel.setText("" + b1.getTel());
-            txtdesc.setText("" + b1.getDescription());
-            List<Utilisateur> alc = utilDAO.search(b1.getSigle());
-            //System.out.println(alc.size());
-            //System.out.println(alc);
-            /*int nr = dft1.getRowCount();
+        if (txtid.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Aucune valeur entrée", "ERREUR", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int id = Integer.parseInt(txtid.getText());
+
+            try {
+
+                b1 = burDAO.read(id);
+                txtsigle.setText("" + b1.getSigle());
+                txttel.setText("" + b1.getTel());
+                txtdesc.setText("" + b1.getDescription());
+                List<Utilisateur> alc = utilDAO.search(b1.getSigle());
+                //System.out.println(alc.size());
+                //System.out.println(alc);
+                /*int nr = dft1.getRowCount();
             for (int i = nr - 1; i >= 0; i--) {
                 dft1.removeRow(i);
             }*/
-            for (Utilisateur u2 : alc) {
-                Vector v = new Vector();
-                //System.out.println(u2.getIdemp());
-                v.add(u2.getIdemp());
-                v.add(u2.getNom());
-                v.add(u2.getPrenom());
-                v.add(u2.getMatricule());
-                dft1.addRow(v);
-                //System.out.println(v);
+                for (Utilisateur u2 : alc) {
+                    Vector v = new Vector();
+                    //System.out.println(u2.getIdemp());
+                    v.add(u2.getIdemp());
+                    v.add(u2.getNom());
+                    v.add(u2.getPrenom());
+                    v.add(u2.getMatricule());
+                    dft1.addRow(v);
+                    //System.out.println(v);
 
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "ERREUR", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "ERREUR", JOptionPane.ERROR_MESSAGE);
         }
 
 
