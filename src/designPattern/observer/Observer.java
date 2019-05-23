@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package designPattern.metier;
+package designPattern.observer;
 
 /**
  *
  * @author USER
  */
-public class Bureau {
+public abstract class Observer {
     
+    public abstract void update(String msg);
 }

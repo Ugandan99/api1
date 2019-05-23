@@ -38,12 +38,35 @@ public class Gestion extends javax.swing.JFrame {
         utilDAO.setConnection(dbConnect);
         MessageDAO messDAO = new MessageDAO();
         messDAO.setConnection(dbConnect);
+        
+        
+        
+        affenv1.setMessageDAO(messDAO);
+        
+        affrec1.setMessageDAO(messDAO);
+        
+        
         creabur1.setBureauDAO(bureauDAO);
+        
+        creeremp1.setBureauDAO(bureauDAO);
+        creeremp1.setUtilisateurDAO(utilDAO);
+        
+        modifbur1.setBureauDAO(bureauDAO);
+        
+        modifemp1.setBureauDAO(bureauDAO);
+        modifemp1.setUtilisateurDAO(utilDAO);
+        
+        
         rechdescbur1.setBureauDAO(bureauDAO);
+        
         rechidbur1.setBureauDAO(bureauDAO);
         rechidbur1.setUtilisateurDAO(utilDAO);
-        affenv2.setMessageDAO(messDAO);
-        affrec2.setMessageDAO(messDAO);
+                        
+        suppbur1.setBureauDAO(bureauDAO);
+        
+        suppemp1.setBureauDAO(bureauDAO);
+        suppemp1.setUtilisateurDAO(utilDAO);
+        
         
         
         /*rechCliNum.setClientDAO(clientDAO);
@@ -60,14 +83,18 @@ public class Gestion extends javax.swing.JFrame {
     private void initComponents() {
 
         accueil1 = new bureau.graph.Accueil();
-        modifbur1 = new bureau.graph.modifbur();
-        rechdescbur1 = new bureau.graph.rechdescbur();
-        suppbur1 = new bureau.graph.suppbur();
+        affenv1 = new bureau.graph.affenv();
+        affrec1 = new bureau.graph.affrec();
         creabur1 = new bureau.graph.creabur();
+        creeremp1 = new bureau.graph.creeremp();
+        modifbur1 = new bureau.graph.modifbur();
+        modifemp1 = new bureau.graph.modifemp();
+        rechdescbur1 = new bureau.graph.rechdescbur();
+        rechemp1 = new bureau.graph.rechemp();
         rechidbur1 = new bureau.graph.rechidbur();
-        affenv2 = new bureau.graph.affenv();
-        affrec2 = new bureau.graph.affrec();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        suppbur1 = new bureau.graph.suppbur();
+        suppemp1 = new bureau.graph.suppemp();
+        menu = new javax.swing.JMenuBar();
         Bur = new javax.swing.JMenu();
         creerbur = new javax.swing.JMenuItem();
         modifbur = new javax.swing.JMenuItem();
@@ -88,49 +115,17 @@ public class Gestion extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(621, 410));
         getContentPane().setLayout(new java.awt.CardLayout());
         getContentPane().add(accueil1, "card2");
-
-        javax.swing.GroupLayout modifbur1Layout = new javax.swing.GroupLayout(modifbur1);
-        modifbur1.setLayout(modifbur1Layout);
-        modifbur1Layout.setHorizontalGroup(
-            modifbur1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 749, Short.MAX_VALUE)
-        );
-        modifbur1Layout.setVerticalGroup(
-            modifbur1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 619, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(modifbur1, "card4");
-
-        javax.swing.GroupLayout rechdescbur1Layout = new javax.swing.GroupLayout(rechdescbur1);
-        rechdescbur1.setLayout(rechdescbur1Layout);
-        rechdescbur1Layout.setHorizontalGroup(
-            rechdescbur1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 749, Short.MAX_VALUE)
-        );
-        rechdescbur1Layout.setVerticalGroup(
-            rechdescbur1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 619, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(rechdescbur1, "card5");
-
-        javax.swing.GroupLayout suppbur1Layout = new javax.swing.GroupLayout(suppbur1);
-        suppbur1.setLayout(suppbur1Layout);
-        suppbur1Layout.setHorizontalGroup(
-            suppbur1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 749, Short.MAX_VALUE)
-        );
-        suppbur1Layout.setVerticalGroup(
-            suppbur1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 619, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(suppbur1, "card7");
-        getContentPane().add(creabur1, "card3");
-        getContentPane().add(rechidbur1, "card8");
-        getContentPane().add(affenv2, "card9");
-        getContentPane().add(affrec2, "card10");
+        getContentPane().add(affenv1, "card3");
+        getContentPane().add(affrec1, "card4");
+        getContentPane().add(creabur1, "card5");
+        getContentPane().add(creeremp1, "card6");
+        getContentPane().add(modifbur1, "card7");
+        getContentPane().add(modifemp1, "card8");
+        getContentPane().add(rechdescbur1, "card9");
+        getContentPane().add(rechemp1, "card10");
+        getContentPane().add(rechidbur1, "card11");
+        getContentPane().add(suppbur1, "card12");
+        getContentPane().add(suppemp1, "card13");
 
         Bur.setText("Bureau");
         Bur.addActionListener(new java.awt.event.ActionListener() {
@@ -179,7 +174,7 @@ public class Gestion extends javax.swing.JFrame {
         });
         Bur.add(rechdescbur);
 
-        jMenuBar1.add(Bur);
+        menu.add(Bur);
 
         Emp.setText("Employés");
 
@@ -223,7 +218,7 @@ public class Gestion extends javax.swing.JFrame {
         });
         Emp.add(affemp);
 
-        jMenuBar1.add(Emp);
+        menu.add(Emp);
 
         Mess.setText("Messages");
 
@@ -243,63 +238,66 @@ public class Gestion extends javax.swing.JFrame {
         });
         Mess.add(affrecu);
 
-        jMenuBar1.add(Mess);
+        menu.add(Mess);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(menu);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void creerburActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creerburActionPerformed
 
-        cardl.show(this.getContentPane(), "card3");
+        cardl.show(this.getContentPane(), "card5");
     }//GEN-LAST:event_creerburActionPerformed
 
     private void rechburActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechburActionPerformed
         // TODO add your handling code here:
-        cardl.show(this.getContentPane(), "card8");
+        cardl.show(this.getContentPane(), "card11");
     }//GEN-LAST:event_rechburActionPerformed
 
     private void rechdescburActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechdescburActionPerformed
         // TODO add your handling code here:
-        cardl.show(this.getContentPane(), "card5");
+        cardl.show(this.getContentPane(), "card9");
     }//GEN-LAST:event_rechdescburActionPerformed
 
     private void suppburActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suppburActionPerformed
-        // TODO add your handling code here:
-        cardl.show(this.getContentPane(), "card7");
-        
+        // TODO add your handling code here:   
+        cardl.show(this.getContentPane(), "card12");
     }//GEN-LAST:event_suppburActionPerformed
 
     private void creerempActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creerempActionPerformed
         // TODO add your handling code here:
+        cardl.show(this.getContentPane(), "card6");
     }//GEN-LAST:event_creerempActionPerformed
 
     private void modifempActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifempActionPerformed
         // TODO add your handling code here:
+        cardl.show(this.getContentPane(), "card8");
     }//GEN-LAST:event_modifempActionPerformed
 
     private void suppempActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suppempActionPerformed
         // TODO add your handling code here:
+        cardl.show(this.getContentPane(), "card13");
     }//GEN-LAST:event_suppempActionPerformed
 
     private void affempActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_affempActionPerformed
         // TODO add your handling code here:
-        cardl.show(this.getContentPane(), "card8");
+        cardl.show(this.getContentPane(), "card11");
     }//GEN-LAST:event_affempActionPerformed
 
     private void affenvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_affenvActionPerformed
         // TODO add your handling code here:
-        cardl.show(this.getContentPane(), "card9");
+        cardl.show(this.getContentPane(), "card3");
     }//GEN-LAST:event_affenvActionPerformed
 
     private void affrecuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_affrecuActionPerformed
         // TODO add your handling code here:
-        cardl.show(this.getContentPane(), "card10");
+        cardl.show(this.getContentPane(), "card4");
     }//GEN-LAST:event_affrecuActionPerformed
 
     private void rechempActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechempActionPerformed
         // TODO add your handling code here:
+        cardl.show(this.getContentPane(), "card10");
     }//GEN-LAST:event_rechempActionPerformed
 
     private void BurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BurActionPerformed
@@ -309,7 +307,7 @@ public class Gestion extends javax.swing.JFrame {
 
     private void modifburActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifburActionPerformed
         // TODO add your handling code here:
-        cardl.show(this.getContentPane(), "card4");
+        cardl.show(this.getContentPane(), "card7");
     }//GEN-LAST:event_modifburActionPerformed
 
     /**
@@ -355,23 +353,27 @@ public class Gestion extends javax.swing.JFrame {
     private bureau.graph.Accueil accueil1;
     private javax.swing.JMenuItem affemp;
     private javax.swing.JMenuItem affenv;
-    private bureau.graph.affenv affenv2;
-    private bureau.graph.affrec affrec2;
+    private bureau.graph.affenv affenv1;
+    private bureau.graph.affrec affrec1;
     private javax.swing.JMenuItem affrecu;
     private bureau.graph.creabur creabur1;
     private javax.swing.JMenuItem creerbur;
     private javax.swing.JMenuItem creeremp;
-    private javax.swing.JMenuBar jMenuBar1;
+    private bureau.graph.creeremp creeremp1;
+    private javax.swing.JMenuBar menu;
     private javax.swing.JMenuItem modifbur;
     private bureau.graph.modifbur modifbur1;
     private javax.swing.JMenuItem modifemp;
+    private bureau.graph.modifemp modifemp1;
     private javax.swing.JMenuItem rechbur;
     private javax.swing.JMenuItem rechdescbur;
     private bureau.graph.rechdescbur rechdescbur1;
     private javax.swing.JMenuItem rechemp;
+    private bureau.graph.rechemp rechemp1;
     private bureau.graph.rechidbur rechidbur1;
     private javax.swing.JMenuItem suppbur;
     private bureau.graph.suppbur suppbur1;
     private javax.swing.JMenuItem suppemp;
+    private bureau.graph.suppemp suppemp1;
     // End of variables declaration//GEN-END:variables
 }

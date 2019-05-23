@@ -248,10 +248,10 @@ public class rechidbur extends javax.swing.JPanel {
                 List<Utilisateur> alc = utilDAO.search(b1.getSigle());
                 //System.out.println(alc.size());
                 //System.out.println(alc);
-                /*int nr = dft1.getRowCount();
+                int nr = dft1.getRowCount();
             for (int i = nr - 1; i >= 0; i--) {
                 dft1.removeRow(i);
-            }*/
+            }
                 for (Utilisateur u2 : alc) {
                     Vector v = new Vector();
                     //System.out.println(u2.getIdemp());

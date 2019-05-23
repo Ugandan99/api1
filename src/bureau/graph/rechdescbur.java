@@ -6,6 +6,14 @@
 package bureau.graph;
 
 import bureau.DAO.BureauDAO;
+import bureau.DAO.UtilisateurDAO;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import messages.metier.Bureau;
+import messages.metier.Utilisateur;
 
 /**
  *
@@ -13,17 +21,25 @@ import bureau.DAO.BureauDAO;
  */
 public class rechdescbur extends javax.swing.JPanel {
 
+    DefaultTableModel dft1 = new DefaultTableModel();
     /**
      * Creates new form rechdescbur
      */
-        BureauDAO bureauDAO = null;
+    BureauDAO burDAO = null;
 
     public void setBureauDAO(BureauDAO bureauDAO) {
-        this.bureauDAO = bureauDAO;
+        this.burDAO = bureauDAO;
     }
+
     public rechdescbur() {
         initComponents();
+        dft1.addColumn("id");
+        dft1.addColumn("sigle");
+        dft1.addColumn("tel");
+        dft1.addColumn("description");
+        jTable1.setModel(dft1);
     }
+    Bureau b1 = null;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -34,19 +50,136 @@ public class rechdescbur extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        titre = new javax.swing.JLabel();
+        txtrech = new javax.swing.JTextField();
+        lblrech = new javax.swing.JLabel();
+        valider = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+
+        titre.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        titre.setText("Recherche partielle sur la description");
+
+        txtrech.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtrech.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtrechActionPerformed(evt);
+            }
+        });
+
+        lblrech.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblrech.setText("Texte à rechercher");
+
+        valider.setText("Recherche");
+        valider.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                validerActionPerformed(evt);
+            }
+        });
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Id", "Sigle", "Tel", "Description"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(titre))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(lblrech)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtrech, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(valider))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(titre)
+                .addGap(44, 44, 44)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtrech, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblrech)
+                    .addComponent(valider))
+                .addGap(51, 51, 51)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(102, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtrechActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtrechActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtrechActionPerformed
+
+    private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
+        // TODO add your handling code here:
+        //ICI
+        if (txtrech.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Aucune valeur entrée", "ERREUR", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String desc = txtrech.getText();
+            try {
+
+                List<Bureau> alc = burDAO.search(desc);
+                //System.out.println(alc.size());
+                //System.out.println(alc);
+                int nr = dft1.getRowCount();
+            for (int i = nr - 1; i >= 0; i--) {
+                dft1.removeRow(i);
+            }
+                for (Bureau b2 : alc) {
+                    Vector v = new Vector();
+                    //System.out.println(u2.getIdemp());
+                    v.add(b2.getIdbur());
+                    v.add(b2.getSigle());
+                    v.add(b2.getTel());
+                    v.add(b2.getDescription());
+                    dft1.addRow(v);
+                    //System.out.println(v);
+
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "ERREUR", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+    }//GEN-LAST:event_validerActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblrech;
+    private javax.swing.JLabel titre;
+    private javax.swing.JTextField txtrech;
+    private javax.swing.JButton valider;
     // End of variables declaration//GEN-END:variables
 }

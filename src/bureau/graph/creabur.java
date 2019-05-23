@@ -21,7 +21,6 @@ public class creabur extends javax.swing.JPanel {
      * Creates new form CreaCli
      */
     BureauDAO bureauDAO = null;
-    
 
     public creabur() {
         initComponents();
@@ -59,6 +58,7 @@ public class creabur extends javax.swing.JPanel {
             }
         });
 
+        lblid.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblid.setText("Id du bureau");
 
         txtidbur.setEditable(false);
@@ -68,10 +68,13 @@ public class creabur extends javax.swing.JPanel {
             }
         });
 
+        lblsigle.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblsigle.setText("Sigle");
 
+        lbltel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lbltel.setText("Tel");
 
+        lbldesc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lbldesc.setText("Description");
 
         txtsigle.addActionListener(new java.awt.event.ActionListener() {
@@ -95,37 +98,35 @@ public class creabur extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(219, 219, 219)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblid)
-                                    .addComponent(lblsigle)
-                                    .addComponent(lbltel)
-                                    .addComponent(lbldesc))
-                                .addGap(45, 45, 45)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtidbur, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
-                                    .addComponent(txtsigle)
-                                    .addComponent(txttel)
-                                    .addComponent(txtdesc)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(creer)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(vider))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(84, 84, 84)
-                        .addComponent(jLabel1)))
-                .addGap(38, 38, 38))
+                            .addComponent(lblid)
+                            .addComponent(lblsigle)
+                            .addComponent(lbltel)
+                            .addComponent(lbldesc))
+                        .addGap(45, 45, 45)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtidbur)
+                            .addComponent(txtsigle)
+                            .addComponent(txttel)
+                            .addComponent(txtdesc, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel1))
+                .addContainerGap(244, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(88, 88, 88)
+                .addComponent(creer)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(vider)
+                .addGap(156, 156, 156))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
+                .addGap(57, 57, 57)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(80, 80, 80)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblid)
                     .addComponent(txtidbur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -141,28 +142,32 @@ public class creabur extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtdesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbldesc))
-                .addGap(39, 39, 39)
+                .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(creer)
                     .addComponent(vider))
-                .addGap(27, 27, 27))
+                .addContainerGap(210, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void creerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creerActionPerformed
         // TODO add your handling code here:
-        try {
-            String sigle = txtsigle.getText();
-            String tel = txttel.getText();
-            String desc = txtdesc.getText();
-            Bureau b1 = new Bureau(0, sigle, tel, desc);
-            //System.out.println(b1);
-            b1 = bureauDAO.create(b1);
-            txtidbur.setText("" + b1.getIdbur());
-            JOptionPane.showMessageDialog(this, "Bureau ajouté ", "succès", JOptionPane.INFORMATION_MESSAGE);
+        if (txtsigle.getText().isEmpty() || txttel.getText().isEmpty() || txtdesc.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs", "ERREUR", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                String sigle = txtsigle.getText();
+                String tel = txttel.getText();
+                String desc = txtdesc.getText();
+                Bureau b1 = new Bureau(0, sigle, tel, desc);
+                //System.out.println(b1);
+                b1 = bureauDAO.create(b1);
+                txtidbur.setText("" + b1.getIdbur());
+                JOptionPane.showMessageDialog(this, "Bureau ajouté ", "succès", JOptionPane.INFORMATION_MESSAGE);
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "ERREUR", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "ERREUR", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_creerActionPerformed
 
@@ -180,7 +185,7 @@ public class creabur extends javax.swing.JPanel {
         txtsigle.setText("");
         txttel.setText("");
         txtdesc.setText("");
-        
+
     }//GEN-LAST:event_viderActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
